@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.logic.Wall;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -31,6 +33,10 @@ public class GameGraphics extends JFrame {
             g.setColor(logic.getBall().getColor());
             g.fillOval(logic.getBall().getX(), logic.getBall().getY(), logic.getBall().getWidth(), logic.getBall().getHeight());
 
+            for (Wall wall: logic.getWalls()) {
+                g.setColor(wall.getColor());
+                g.drawLine(wall.getCoordStart().x, wall.getCoordStart().y, wall.getCoordEnd().x, wall.getCoordEnd().y);
+            }
         }
     }
 }
