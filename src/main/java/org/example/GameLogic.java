@@ -19,7 +19,7 @@ public class GameLogic {
 
     public void initialize() {
 
-        ball = new Ball(20, 20, 50, 50, Color.BLUE);
+        ball = new Ball(20, 20, "panacek.png");
 
         Wall wall1 = new Wall(250, 30, 250, 130, Color.BLACK);
         Wall wall2 = new Wall(100, 50, 150, 50, Color.BLACK);
@@ -29,6 +29,11 @@ public class GameLogic {
 
     public void update() {
         ball.move(2, Direction.RIGHT);
+        for (Wall wall: walls) {
+            if (ball.isCollided(wall.getRectangle())){
+                wall.inactivate();
+            }
+        }
     }
 
     public Ball getBall() {

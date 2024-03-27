@@ -1,20 +1,27 @@
 package org.example.logic;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public class Ball {
     private int x;
     private int y;
     private int width;
     private int height;
-    private Color color;
+    private Image image;
 
-    public Ball(int x, int y, int width, int height, Color color) {
+    public Ball(int x, int y, String url) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        this.color = color;
+
+
+        ImageIcon ii = new ImageIcon(getClass().getResource("/" + url));
+        this.image = ii.getImage();
+
+        this.width = ii.getIconWidth();
+        this.height = ii.getIconHeight();
+
     }
 
     public int getX() {
@@ -49,12 +56,8 @@ public class Ball {
         this.height = height;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
+    public Image getImage() {
+        return image;
     }
 
     public boolean isCollided (Rectangle otherObject) {

@@ -4,6 +4,7 @@ import org.example.logic.Wall;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public class GameGraphics extends JFrame {
     Draw draw;
@@ -30,12 +31,17 @@ public class GameGraphics extends JFrame {
     public class Draw extends JPanel{
         @Override
         protected void paintComponent(Graphics g) {
-            g.setColor(logic.getBall().getColor());
-            g.fillOval(logic.getBall().getX(), logic.getBall().getY(), logic.getBall().getWidth(), logic.getBall().getHeight());
-
+            g.drawImage(logic.getBall().getImage(), logic.getBall().getX(), logic.getBall().getY(), new ImageObserver() {
+                @Override
+                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                    return false;
+                }
+            });
             for (Wall wall: logic.getWalls()) {
-                g.setColor(wall.getColor());
-                g.drawLine(wall.getCoordStart().x, wall.getCoordStart().y, wall.getCoordEnd().x, wall.getCoordEnd().y);
+                if (wall.isActive()){
+                    g.setColor(wall.getColor());
+                    g.drawLine(wall.getCoordStart().x, wall.getCoordStart().y, wall.getCoordEnd().x, wall.getCoordEnd().y);
+                }
             }
         }
     }
