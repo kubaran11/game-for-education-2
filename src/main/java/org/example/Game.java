@@ -30,9 +30,21 @@ public class Game {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    logic.getBall().move(50, Direction.LEFT);
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_LEFT:
+                        logic.getBall().move(logic.getBall().getWidth(), Direction.LEFT);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        logic.getBall().move(logic.getBall().getWidth(), Direction.RIGHT);
+                        break;
+                    case KeyEvent.VK_UP:
+                        logic.getBall().move(logic.getBall().getHeight(), Direction.UP);
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        logic.getBall().move(logic.getBall().getHeight(), Direction.DOWN);
+                        break;
                 }
+
             }
 
             @Override

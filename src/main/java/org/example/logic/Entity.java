@@ -40,4 +40,19 @@ public class Entity {
         return new Rectangle(coord.x,coord.y,width, height);
     }
 
+    public Coordinates getCoord() {
+        return coord;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Image getImage() {
+        return image;
+    }
 }

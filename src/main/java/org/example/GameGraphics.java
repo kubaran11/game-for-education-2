@@ -42,6 +42,12 @@ public class GameGraphics extends JFrame {
                     g.drawLine(wall.getCoordStart().x, wall.getCoordStart().y, wall.getCoordEnd().x, wall.getCoordEnd().y);
                 }
             }
+            g.drawImage(logic.getEnemy().getImage(), logic.getEnemy().getCoord().x, logic.getEnemy().getCoord().y, new ImageObserver() {
+                @Override
+                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+                    return false;
+                }
+            });
         }
     }
 }
