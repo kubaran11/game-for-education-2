@@ -1,8 +1,6 @@
 package org.example;
 
-import org.example.logic.Ball;
-import org.example.logic.Direction;
-import org.example.logic.Wall;
+import org.example.logic.*;
 
 import java.awt.*;
 import java.util.ArrayList;

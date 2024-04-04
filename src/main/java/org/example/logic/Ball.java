@@ -4,40 +4,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 
-public class Ball {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Image image;
+public class Ball extends Entity {
+    private int lives;
 
     public Ball(int x, int y, String url) {
-        this.x = x;
-        this.y = y;
-
-
-        ImageIcon ii = new ImageIcon(getClass().getResource("/" + url));
-        this.image = ii.getImage();
-
-        this.width = ii.getIconWidth();
-        this.height = ii.getIconHeight();
-
+        super(x, y, url);
+        this.lives = 10;
     }
 
+
     public int getX() {
-        return x;
+        return coord.x;
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.coord.x = x;
     }
 
     public int getY() {
-        return y;
+        return coord.y;
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.coord.y = y;
     }
 
     public int getWidth() {
@@ -60,25 +49,9 @@ public class Ball {
         return image;
     }
 
+
     public boolean isCollided (Rectangle otherObject) {
-        Rectangle ballRectangle = new Rectangle(x,y,width, height);
-        return ballRectangle.intersects(otherObject);
+        return getRectangle().intersects(otherObject);
     }
 
-    public void move(int steps, Direction direction) {
-        switch (direction) {
-            case LEFT -> {
-                this.x -= steps;
-            }
-            case RIGHT -> {
-                this.x += steps;
-            }
-            case UP -> {
-                this.y -= steps;
-            }
-            case DOWN -> {
-                this.y += steps;
-            }
-        }
-    }
 }

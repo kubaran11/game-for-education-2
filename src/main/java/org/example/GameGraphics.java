@@ -1,7 +1,6 @@
 package org.example;
 
-import org.example.logic.Wall;
-
+import org.example.logic.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
