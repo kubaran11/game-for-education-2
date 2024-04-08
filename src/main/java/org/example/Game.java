@@ -7,6 +7,8 @@ import java.awt.event.*;
 
 public class Game {
     GameLogic logic;
+    private final int BALL_STEPS = 20;
+
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -16,7 +18,7 @@ public class Game {
     }
 
     public Game() {
-        logic = new GameLogic();
+        logic = new GameLogic(BALL_STEPS);
         GameGraphics graphic = new GameGraphics(logic);
         logic.initialize();
         graphic.render(logic);
@@ -32,16 +34,16 @@ public class Game {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_LEFT:
-                        logic.getBall().move(logic.getBall().getWidth(), Direction.LEFT);
+                        controlledMove(Direction.LEFT);
                         break;
                     case KeyEvent.VK_RIGHT:
-                        logic.getBall().move(logic.getBall().getWidth(), Direction.RIGHT);
+                        controlledMove(Direction.RIGHT);
                         break;
                     case KeyEvent.VK_UP:
-                        logic.getBall().move(logic.getBall().getHeight(), Direction.UP);
+                        controlledMove(Direction.UP);
                         break;
                     case KeyEvent.VK_DOWN:
-                        logic.getBall().move(logic.getBall().getHeight(), Direction.DOWN);
+                        controlledMove(Direction.DOWN);
                         break;
                 }
 
@@ -59,7 +61,7 @@ public class Game {
                 int differenceX = e.getX() - logic.getBall().getX();
                 int differenceY = e.getY() - logic.getBall().getY() - graphic.getInsets().top;
                 if (differenceX > 0 && differenceX < logic.getBall().getWidth() && differenceY > 0 && differenceY < logic.getBall().getHeight()){
-                    logic.getBall().move(20,Direction.RIGHT);
+                    logic.getBall().move(BALL_STEPS,Direction.RIGHT);
                 }
 
             }
@@ -101,6 +103,11 @@ public class Game {
             graphic.render();
         }
          */
+    }
+    private void controlledMove(Direction direction) {
+        if (!logic.predictCollision(BALL_STEPS, direction)){
+            logic.getBall().move(BALL_STEPS, direction);
+        }
     }
 
     public GameLogic getLogic() {

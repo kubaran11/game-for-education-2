@@ -9,8 +9,10 @@ public class GameLogic {
     private Ball ball;
     private ArrayList<Enemy> enemies;
     private ArrayList<Wall> walls;
+    private final int ENEMY_STEPS = 5;
 
-    public GameLogic() {
+
+    public GameLogic(int ballSteps) {
         this.ball = null;
         this.enemies = new ArrayList<>();
         this.walls = new ArrayList<>();
@@ -41,19 +43,19 @@ public class GameLogic {
                 // Direction LEFT, RIGHT
                 if (ball.getCoord().x - enemy.getCoord().x > 0) {
                     // Direction RIGHT
-                    enemy.move(5, Direction.RIGHT);
+                    enemy.move(ENEMY_STEPS, Direction.RIGHT);
                 } else {
                     // Direction LEFT
-                    enemy.move(5, Direction.LEFT);
+                    enemy.move(ENEMY_STEPS, Direction.LEFT);
                 }
             } else {
                 // Direction UP, DOWN
                 if (ball.getCoord().y - enemy.getCoord().y > 0) {
                     // Direction DOWN
-                    enemy.move(5, Direction.DOWN);
+                    enemy.move(ENEMY_STEPS, Direction.DOWN);
                 } else {
                     // Direction UP
-                    enemy.move(5, Direction.UP);
+                    enemy.move(ENEMY_STEPS, Direction.UP);
                 }
             }
         }
@@ -62,6 +64,33 @@ public class GameLogic {
                 wall.inactivate();
             }
         }
+    }
+
+    public boolean predictCollision(int ballSteps, Direction direction) {
+        Rectangle moveRectangle = new Rectangle();
+        switch (direction) {
+            case RIGHT -> {
+                moveRectangle = new Rectangle(ball.getX() + ballSteps, ball.getY(), ball.getWidth(), ball.getHeight());
+            }
+            case LEFT -> {
+                moveRectangle = new Rectangle(ball.getX() - ballSteps, ball.getY(), ball.getWidth(), ball.getHeight());
+            }
+            case UP -> {
+                moveRectangle = new Rectangle(ball.getX(), ball.getY() - ballSteps, ball.getWidth(), ball.getHeight());
+            }
+            case DOWN -> {
+                moveRectangle = new Rectangle(ball.getX(), ball.getY() + ballSteps, ball.getWidth(), ball.getHeight());
+            }
+
+        }
+        for (Wall wall:walls) {
+            if (moveRectangle.intersects(wall.getRectangle())){
+                return true;
+            }
+        }
+        return false;
+
+
     }
 
     public ArrayList<Enemy> getEnemy() {
