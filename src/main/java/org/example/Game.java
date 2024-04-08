@@ -32,20 +32,22 @@ public class Game {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_LEFT:
-                        logic.getBall().move(logic.getBall().getWidth(), Direction.LEFT);
+                        controlledMove(Direction.LEFT);
                         break;
                     case KeyEvent.VK_RIGHT:
-                        logic.getBall().move(logic.getBall().getWidth(), Direction.RIGHT);
+                        controlledMove(Direction.RIGHT);
                         break;
                     case KeyEvent.VK_UP:
-                        logic.getBall().move(logic.getBall().getHeight(), Direction.UP);
+                        controlledMove(Direction.UP);
                         break;
                     case KeyEvent.VK_DOWN:
-                        logic.getBall().move(logic.getBall().getHeight(), Direction.DOWN);
+                        controlledMove(Direction.DOWN);
                         break;
                 }
 
             }
+
+
 
             @Override
             public void keyReleased(KeyEvent e) {
@@ -101,6 +103,11 @@ public class Game {
             graphic.render();
         }
          */
+    }
+    private void controlledMove(Direction direction) {
+        if (!logic.predictCollision(direction)){
+            logic.moveBall(direction);
+        }
     }
 
     public GameLogic getLogic() {
