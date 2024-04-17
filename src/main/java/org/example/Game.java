@@ -107,7 +107,6 @@ public class Game {
     }
     private void controlledMove(Direction direction) {
         if (!logic.predictCollision(direction)){
-            logic.moveBall(direction);
             logic.movePlayer(direction);
 
         }
