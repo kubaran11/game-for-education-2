@@ -12,7 +12,6 @@ public class GameLogic {
     private final int ENEMY_STEPS = 5;
     private final int BALL_STEPS = 20;
 
-
     public GameLogic() {
         this.ball = null;
         this.enemies = new ArrayList<>();
@@ -66,6 +65,32 @@ public class GameLogic {
             }
         }
     }
+    public void moveBall(Direction direction) {
+        ball.move(BALL_STEP, direction);
+    }
+    public boolean predictCollision(Direction direction) {
+        Rectangle moveRectangle = new Rectangle();
+        switch (direction) {
+            case RIGHT -> {
+                moveRectangle = new Rectangle(ball.getX()+BALL_STEP, ball.getY(), ball.getWidth(),ball.getHeight());
+            }
+            case LEFT -> {
+                moveRectangle = new Rectangle(ball.getX()-BALL_STEP, ball.getY(), ball.getWidth(),ball.getHeight());
+            }
+            case UP -> {
+                moveRectangle = new Rectangle(ball.getX(), ball.getY()-BALL_STEP, ball.getWidth(),ball.getHeight());
+            }
+            case DOWN -> {
+                moveRectangle = new Rectangle(ball.getX(), ball.getY()+BALL_STEP, ball.getWidth(),ball.getHeight());
+            }
+        }
+        for (Wall wall: walls){
+            if (moveRectangle.intersects(wall.getRectangle())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean predictCollision(Direction direction) {
         Rectangle moveRectangle = new Rectangle();
@@ -105,6 +130,8 @@ public class GameLogic {
     public ArrayList<Wall> getWalls() {
         return walls;
     }
+
+
 
     public void movePlayer(Direction direction) {
         ball.move(BALL_STEPS, direction);
