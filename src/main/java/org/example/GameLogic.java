@@ -43,19 +43,19 @@ public class GameLogic {
                 // Direction LEFT, RIGHT
                 if (ball.getCoord().x - enemy.getCoord().x > 0) {
                     // Direction RIGHT
-                    enemy.move(ENEMY_STEPS, Direction.RIGHT);
+                    moveEnemy(Direction.RIGHT, enemy);
                 } else {
                     // Direction LEFT
-                    enemy.move(ENEMY_STEPS, Direction.LEFT);
+                    moveEnemy(Direction.LEFT, enemy);
                 }
             } else {
                 // Direction UP, DOWN
                 if (ball.getCoord().y - enemy.getCoord().y > 0) {
                     // Direction DOWN
-                    enemy.move(ENEMY_STEPS, Direction.DOWN);
+                    moveEnemy(Direction.DOWN, enemy);
                 } else {
                     // Direction UP
-                    enemy.move(ENEMY_STEPS, Direction.UP);
+                    moveEnemy(Direction.UP, enemy);
                 }
             }
         }
@@ -65,21 +65,23 @@ public class GameLogic {
             }
         }
     }
-
-    public boolean predictCollision(Direction direction) {
+    public boolean predictBallCollision(Direction direction){
+        return predictCollision(direction, ball, BALL_STEPS);
+    }
+    private boolean predictCollision(Direction direction, Entity entity, int steps) {
         Rectangle moveRectangle = new Rectangle();
         switch (direction) {
             case RIGHT -> {
-                moveRectangle = new Rectangle(ball.getX() + BALL_STEPS, ball.getY(), ball.getWidth(), ball.getHeight());
+                moveRectangle = new Rectangle(entity.getX() + steps, entity.getY(), entity.getWidth(), entity.getHeight());
             }
             case LEFT -> {
-                moveRectangle = new Rectangle(ball.getX() - BALL_STEPS, ball.getY(), ball.getWidth(), ball.getHeight());
+                moveRectangle = new Rectangle(entity.getX() - steps, entity.getY(), entity.getWidth(), entity.getHeight());
             }
             case UP -> {
-                moveRectangle = new Rectangle(ball.getX(), ball.getY() - BALL_STEPS, ball.getWidth(), ball.getHeight());
+                moveRectangle = new Rectangle(entity.getX(), entity.getY() - steps, entity.getWidth(), entity.getHeight());
             }
             case DOWN -> {
-                moveRectangle = new Rectangle(ball.getX(), ball.getY() + BALL_STEPS, ball.getWidth(), ball.getHeight());
+                moveRectangle = new Rectangle(entity.getX(), entity.getY() + steps, entity.getWidth(), entity.getHeight());
             }
 
         }
@@ -105,7 +107,11 @@ public class GameLogic {
         return walls;
     }
 
-
+    private void moveEnemy(Direction direction, Enemy enemy){
+        if (!predictCollision(direction, enemy, ENEMY_STEPS)) {
+            enemy.move(ENEMY_STEPS, direction);
+        }
+    }
 
     public void movePlayer(Direction direction) {
         ball.move(BALL_STEPS, direction);
