@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 public class Game {
     GameLogic logic;
+
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -61,7 +62,7 @@ public class Game {
                 int differenceX = e.getX() - logic.getBall().getX();
                 int differenceY = e.getY() - logic.getBall().getY() - graphic.getInsets().top;
                 if (differenceX > 0 && differenceX < logic.getBall().getWidth() && differenceY > 0 && differenceY < logic.getBall().getHeight()){
-                    logic.getBall().move(20,Direction.RIGHT);
+                    logic.movePlayer(Direction.RIGHT);
                 }
 
             }
@@ -107,6 +108,8 @@ public class Game {
     private void controlledMove(Direction direction) {
         if (!logic.predictCollision(direction)){
             logic.moveBall(direction);
+            logic.movePlayer(direction);
+
         }
     }
 

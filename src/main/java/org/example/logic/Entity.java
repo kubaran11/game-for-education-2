@@ -36,7 +36,7 @@ public class Entity {
             }
         }
     }
-    protected Rectangle getRectangle(){
+    public Rectangle getRectangle(){
         return new Rectangle(coord.x,coord.y,width, height);
     }
 
