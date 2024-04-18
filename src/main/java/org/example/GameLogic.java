@@ -110,6 +110,40 @@ public class GameLogic {
     private void moveEnemy(Direction direction, Enemy enemy){
         if (!predictCollision(direction, enemy, ENEMY_STEPS)) {
             enemy.move(ENEMY_STEPS, direction);
+        } else {
+            ArrayList<Direction> directions = new ArrayList<>();
+            switch (direction) {
+                case UP -> {
+                    directions.add(Direction.RIGHT);
+                    directions.add(Direction.DOWN);
+                    directions.add(Direction.LEFT);
+                }
+                case RIGHT -> {
+                    directions.add(Direction.DOWN);
+                    directions.add(Direction.LEFT);
+                    directions.add(Direction.UP);
+
+                }
+                case DOWN -> {
+                    directions.add(Direction.LEFT);
+                    directions.add(Direction.UP);
+                    directions.add(Direction.RIGHT);
+
+                }
+                case LEFT -> {
+                    directions.add(Direction.UP);
+                    directions.add(Direction.RIGHT);
+                    directions.add(Direction.DOWN);
+
+                }
+
+            }
+            for (Direction testedDirection: directions){
+                if (!predictCollision(testedDirection, enemy, ENEMY_STEPS)) {
+                    enemy.move(ENEMY_STEPS, testedDirection);
+                    break;
+                }
+            }
         }
     }
 
